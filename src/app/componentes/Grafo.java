@@ -4,19 +4,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Grafo {
-	private boolean[][]A;
+	private int[][]A;
 	
 	public Grafo(int vertices) {
-		A = new boolean[vertices][vertices];
+		A = new int[vertices][vertices];
 	}
 	
-	public void insertarArista(int i, int j) {
-		A[i][j] = true;
-		A[j][i] = true;
+	public void insertarArista(int i, int j, int peso) {
+		A[i][j] = peso;
+		A[j][i] = peso;
 	}
 	
 	public boolean existeArista (int vertice1, int vertice2) {
-		return A[vertice1][vertice2];
+		return A[vertice1][vertice2] > 0;
 	}
 	
 	private int tamano()

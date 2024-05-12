@@ -11,7 +11,7 @@ public class Programa {
 		this.grafo = new Grafo(cantidadVertices);
 	}
 	
-	public void agregarArista (int vertice1, int vertice2) {
-		this.grafo.insertarArista(vertice1, vertice2);
+	public void agregarArista (int vertice1, int vertice2, int peso) {
+		this.grafo.insertarArista(vertice1, vertice2, peso);
 	}
 }
