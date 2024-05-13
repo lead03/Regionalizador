@@ -9,6 +9,10 @@ public class Grafo {
 	public Grafo(int vertices) {
 		matrizAdyacenciaConPesos = new int[vertices][vertices];
 	}
+	
+	public void setMatrizIncidencia(int[][] matriz) {
+		this.matrizAdyacenciaConPesos = matriz;
+	}
 
 	public void insertarArista(int i, int j, int peso) {
 		matrizAdyacenciaConPesos[i][j] = peso;
