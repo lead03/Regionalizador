@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import app.componentes.Grafo;
 
 class GrafoTest {
-	private Grafo grafo;
 	
 	private Grafo declararGrafoDisconexo15Vertices() {
 		Grafo grafo = new Grafo(5);

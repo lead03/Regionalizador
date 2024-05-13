@@ -1,35 +1,50 @@
 package app.componentes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 public class Grafo {
-	private int[][] matrizAdyacenciaConPesos;
+	private int[][] matrizAdyacencia;
+	private int numVertices;
 
-	public Grafo(int vertices) {
-		matrizAdyacenciaConPesos = new int[vertices][vertices];
+	public Grafo(int numVertices) {
+		this.numVertices = numVertices;
+		this.matrizAdyacencia = new int[numVertices][numVertices];
 	}
-	
+
 	public void setMatrizIncidencia(int[][] matriz) {
-		this.matrizAdyacenciaConPesos = matriz;
+		this.matrizAdyacencia = matriz;
 	}
 
-	public void insertarArista(int i, int j, int peso) {
-		matrizAdyacenciaConPesos[i][j] = peso;
-		matrizAdyacenciaConPesos[j][i] = peso;
+	private int[][] accederMatrizIncidencia(Grafo grafo) {
+		return grafo.matrizAdyacencia;
+	}
+
+	public void agregarArista(int i, int j, int peso) {
+		matrizAdyacencia[i][j] = peso;
+		matrizAdyacencia[j][i] = peso;
 	}
 
 	public void eliminarArista(int i, int j) {
-		matrizAdyacenciaConPesos[i][j] = 0;
-		matrizAdyacenciaConPesos[j][i] = 0;
+		matrizAdyacencia[i][j] = 0;
+		matrizAdyacencia[j][i] = 0;
 	}
 
 	public boolean existeArista(int vertice1, int vertice2) {
-		return matrizAdyacenciaConPesos[vertice1][vertice2] > 0;
+		return matrizAdyacencia[vertice1][vertice2] > 0;
 	}
 
-	private int obtenerTamano() {
-		return matrizAdyacenciaConPesos.length;
+	public int obtenerTamano() {
+		return matrizAdyacencia.length;
+	}
+
+	public int getArista(int verticeOrigen, int verticeDestino) {
+		return matrizAdyacencia[verticeOrigen][verticeDestino];
 	}
 
 	public Set<Integer> obtenerVecinos(int indiceArista) {
@@ -42,13 +57,14 @@ public class Grafo {
 		return ret;
 	}
 
-	public void generarArbolMinimo(Grafo grafoEntrada) {
-		throw new UnsupportedOperationException("Crear algoritmo de prim que haga el arbol minimo generador");
+	//TODO no lo pude hacer andar bien a este algoritmo :/
+	public void generarArbolMinimo(Grafo grafoOriginal) {
+		throw new UnsupportedOperationException("FALTA IMPLEMENTAR CORRECTAMENTE");
 	}
 
 	public void eliminarMayoresAristas(int cantidadAEliminar) {
 		for (int i = 0; i < cantidadAEliminar; i++) {
-			int[] aristaAEliminar = obtenerAristaDeMayorPeso(this.matrizAdyacenciaConPesos);
+			int[] aristaAEliminar = obtenerAristaDeMayorPeso(this.matrizAdyacencia);
 			eliminarArista(aristaAEliminar[0], aristaAEliminar[1]);
 		}
 	}
@@ -66,5 +82,49 @@ public class Grafo {
 			}
 		}
 		return posicionMaximo;
+	}
+
+	public List<List<Integer>> encontrarGrafosConexos() {
+		int[][] matriz = accederMatrizIncidencia(this);
+		int n = matriz.length;
+		boolean[] visitado = new boolean[n];
+		List<List<Integer>> grafosConexos = new ArrayList<>();
+
+		for (int i = 0; i < n; i++) {
+			if (!visitado[i]) {
+				List<Integer> verticesConexos = new ArrayList<>();
+				bfs(i, matriz, visitado, verticesConexos);
+				grafosConexos.add(verticesConexos);
+			}
+		}
+
+		return grafosConexos;
+	}
+
+	public static void bfs(int verticeInicial, int[][] matriz, boolean[] visitado, List<Integer> verticesConexos) {
+		Queue<Integer> cola = new LinkedList<>();
+		cola.offer(verticeInicial);
+		visitado[verticeInicial] = true;
+
+		while (!cola.isEmpty()) {
+			int vertice = cola.poll();
+			verticesConexos.add(vertice);
+
+			for (int i = 0; i < matriz[vertice].length; i++) {
+				if (matriz[vertice][i] != 0 && !visitado[i]) {
+					cola.offer(i);
+					visitado[i] = true;
+				}
+			}
+		}
+	}
+
+	public void imprimirMatrizAdyacencia() {
+		for (int i = 0; i < numVertices; i++) {
+			for (int j = 0; j < numVertices; j++) {
+				System.out.print(matrizAdyacencia[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 }
