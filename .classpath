@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/Users/leand/.p2/pool/plugins/org.eclipse.text_3.14.0.v20240207-1054.jar" sourcepath="C:/Users/leand/.p2/pool/plugins/org.eclipse.text_3.14.0.v20240207-1054.jar"/>
 	<classpathentry kind="lib" path="C:/Users/leand/.p2/pool/plugins/org.eclipse.ui.forms_3.13.200.v20240108-1539.jar" sourcepath="C:/Users/leand/.p2/pool/plugins/org.eclipse.ui.forms_3.13.200.v20240108-1539.jar"/>
 	<classpathentry kind="lib" path="C:/Users/leand/.p2/pool/plugins/org.eclipse.ui.workbench_3.131.100.v20240221-2107.jar" sourcepath="C:/Users/leand/.p2/pool/plugins/org.eclipse.ui.workbench_3.131.100.v20240221-2107.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
