@@ -1,130 +1,87 @@
 package app.componentes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.Objects;
 
 public class Grafo {
-	private int[][] matrizAdyacencia;
-	private int numVertices;
+	private int cantVertices; // Número de vértices
+    private List<List<Arista>> vecinos; // Lista de adyacencia para representar el grafo
 
-	public Grafo(int numVertices) {
-		this.numVertices = numVertices;
-		this.matrizAdyacencia = new int[numVertices][numVertices];
+    public Grafo(int cantVertices) {
+        this.cantVertices = cantVertices;
+        vecinos = new ArrayList<>(cantVertices);
+        for (int i = 0; i < cantVertices; ++i)
+            vecinos.add(new ArrayList<>());
+    }
+    
+    public Grafo(int cantVertices, List<List<Arista>> vecinos) {
+        this.cantVertices = cantVertices;
+        this.vecinos = vecinos;//revisar copia de memoria
+    }
+
+    public void agregarArista(int origen, int destino, int peso) {
+    	if(origen == destino) {
+    		throw new IllegalArgumentException("origen y destino son iguales");
+    	}
+    	
+        vecinos.get(origen).add(new Arista(origen, destino, peso));
+        vecinos.get(destino).add(new Arista(destino, origen, peso));
+    }
+
+    public int getCantVertices() {
+    	return this.cantVertices;
+    }
+
+	public List<List<Arista>> getVecinos() {
+		return vecinos;
 	}
 
-	public void setMatrizIncidencia(int[][] matriz) {
-		this.matrizAdyacencia = matriz;
-	}
 
-	private int[][] accederMatrizIncidencia(Grafo grafo) {
-		return grafo.matrizAdyacencia;
-	}
+	@Override
+	public boolean equals(Object obj) {
 
-	public void agregarArista(int i, int j, int peso) {
-		matrizAdyacencia[i][j] = peso;
-		matrizAdyacencia[j][i] = peso;
-	}
-
-	public void eliminarArista(int i, int j) {
-		matrizAdyacencia[i][j] = 0;
-		matrizAdyacencia[j][i] = 0;
-	}
-
-	public boolean existeArista(int vertice1, int vertice2) {
-		return matrizAdyacencia[vertice1][vertice2] > 0;
-	}
-
-	public int obtenerTamano() {
-		return matrizAdyacencia.length;
-	}
-
-	public int getArista(int verticeOrigen, int verticeDestino) {
-		return matrizAdyacencia[verticeOrigen][verticeDestino];
-	}
-
-	public Set<Integer> obtenerVecinos(int indiceArista) {
-		Set<Integer> ret = new HashSet<Integer>();
-		for (int j = 0; j < this.obtenerTamano(); ++j)
-			if (indiceArista != j) {
-				if (this.existeArista(indiceArista, j))
-					ret.add(j);
-			}
-		return ret;
-	}
-
-	//TODO no lo pude hacer andar bien a este algoritmo :/
-	public void generarArbolMinimo(Grafo grafoOriginal) {
-		throw new UnsupportedOperationException("FALTA IMPLEMENTAR CORRECTAMENTE");
-	}
-
-	public void eliminarMayoresAristas(int cantidadAEliminar) {
-		for (int i = 0; i < cantidadAEliminar; i++) {
-			int[] aristaAEliminar = obtenerAristaDeMayorPeso(this.matrizAdyacencia);
-			eliminarArista(aristaAEliminar[0], aristaAEliminar[1]);
+		if(obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Grafo other = (Grafo) obj;
+		
+		if(other.getCantVertices() != this.getCantVertices()) {
+			return false;
 		}
+		
+		if ( this.getVecinos().size() != other.getVecinos().size()) {
+            return false;
+        }
+		
+		for (int i = 0; i < this.getVecinos().size(); i++) {
+            List<Arista> listaA = this.getVecinos().get(i);
+            List<Arista> listaB = other.getVecinos().get(i);
+
+            // Utiliza el método equals de las listas para compararlas
+            if (!Objects.equals(listaA, listaB)) {
+                return false;
+            }
+        }
+		
+		return true;
 	}
 
-	private static int[] obtenerAristaDeMayorPeso(int[][] matrizSimetricaSinLoops) {
-		int maximo = 0;
-		int[] posicionMaximo = new int[2];
-		for (int i = 1; i < matrizSimetricaSinLoops.length; i++) {
-			for (int j = i; j < matrizSimetricaSinLoops[i].length; j++) {
-				if (matrizSimetricaSinLoops[i][j] > maximo) {
-					maximo = matrizSimetricaSinLoops[i][j];
-					posicionMaximo[0] = i;
-					posicionMaximo[1] = j;
-				}
-			}
-		}
-		return posicionMaximo;
+	@Override
+	public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("Grafo con ").append(cantVertices).append(" vértices:\n");
+	    for (int i = 0; i < vecinos.size(); i++) {
+	        sb.append("Vértice ").append(i).append(":\n");
+	        List<Arista> vecino = vecinos.get(i);
+	        for (Arista arista : vecino) {
+	            sb.append("  -> ").append(arista).append("\n");
+	        }
+	    }
+	    return sb.toString();
 	}
-
-	public List<List<Integer>> encontrarGrafosConexos() {
-		int[][] matriz = accederMatrizIncidencia(this);
-		int n = matriz.length;
-		boolean[] visitado = new boolean[n];
-		List<List<Integer>> grafosConexos = new ArrayList<>();
-
-		for (int i = 0; i < n; i++) {
-			if (!visitado[i]) {
-				List<Integer> verticesConexos = new ArrayList<>();
-				bfs(i, matriz, visitado, verticesConexos);
-				grafosConexos.add(verticesConexos);
-			}
-		}
-
-		return grafosConexos;
-	}
-
-	public static void bfs(int verticeInicial, int[][] matriz, boolean[] visitado, List<Integer> verticesConexos) {
-		Queue<Integer> cola = new LinkedList<>();
-		cola.offer(verticeInicial);
-		visitado[verticeInicial] = true;
-
-		while (!cola.isEmpty()) {
-			int vertice = cola.poll();
-			verticesConexos.add(vertice);
-
-			for (int i = 0; i < matriz[vertice].length; i++) {
-				if (matriz[vertice][i] != 0 && !visitado[i]) {
-					cola.offer(i);
-					visitado[i] = true;
-				}
-			}
-		}
-	}
-
-	public void imprimirMatrizAdyacencia() {
-		for (int i = 0; i < numVertices; i++) {
-			for (int j = 0; j < numVertices; j++) {
-				System.out.print(matrizAdyacencia[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
+	
 }

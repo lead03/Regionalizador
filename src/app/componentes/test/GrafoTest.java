@@ -1,44 +1,36 @@
 package app.componentes.test;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import app.componentes.Grafo;
+import java.util.Queue;
+
+import app.Programa;
+import app.componentes.Arista;
 
 class GrafoTest {
 	
-	private Grafo declararGrafoDisconexo15Vertices() {
-		Grafo grafo = new Grafo(5);
-		int[][] matriz = {	
-				{0, 3, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0}, 
-				{0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{2, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 0, 4, 0, 3, 5, 0, 0, 0, 0}, 
-				{0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
-				{0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0}
-				};
-		grafo.setMatrizIncidencia(matriz);
-		return grafo;
-	}
+	
 
 	@Test
-	public void verificarAristaExistente() {
-		Grafo grafo = declararGrafoDisconexo15Vertices();
-		assertTrue(grafo.existeArista(1, 2));
-		assertTrue(grafo.existeArista(0, 4));
-		assertTrue(grafo.existeArista(1, 0));
-		assertTrue(grafo.existeArista(2, 1));
-		assertFalse(grafo.existeArista(0, 3));
-		assertFalse(grafo.existeArista(14, 4));
+	public void agm() {
+		
+		Programa pro = new Programa();
+		Queue<Arista> agm = pro.agm(GrafoDummy.builGrafoConexo());
+		Queue<Arista> agmEsperado = GrafoDummy.builAgmEsperado();
+		
+		print(agm);
+		assertTrue(equalList(agm, agmEsperado));
 	}
 
+	private void print(Queue<Arista> agm) {
+		for(Arista arista: agm) {
+			System.out.println("Arista: "+arista.getOrigen()+" >> " +arista.getDestino() + ", Peso: "+ arista.getPeso());
+		}
+	}
+	
+	private boolean equalList(Queue<Arista> a, Queue<Arista> b) {
+		return a.equals(b);
+	}
 }
