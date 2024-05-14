@@ -1,47 +1,62 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
+import app.componentes.Arista;
 import app.componentes.Grafo;
 
 public class Programa {
-
-	private Grafo grafo;
-	private Grafo grafoArbolGeneradorMinimo;
-
-	public void construirGrafo(int cantidadVertices) {
-		this.grafo = new Grafo(cantidadVertices);
-	}
 	
-	public void agregarTodasLasAristas(ArrayList<int[]> coleccionAristas) {
-		for (int[] arista : coleccionAristas) {
-			this.agregarArista(arista[0], arista[1], arista[2]);
+	public void run(int regiones, Grafo grafo) {
+		Queue<Arista> agm = agm(grafo);
+		
+		for(int x= 1; x <= regiones; x++) {
+			agm.poll();
 		}
-	}
-
-	public void agregarArista(int vertice1, int vertice2, int peso) {
-		this.grafo.agregarArista(vertice1, vertice2, peso);
-		this.grafo.agregarArista(vertice2, vertice1, peso);
-	}
-
-	public void generarArbolMinimo() {
-		grafoArbolGeneradorMinimo = new Grafo(this.grafo.obtenerTamano());
-        grafoArbolGeneradorMinimo.generarArbolMinimo(this.grafo);
-    }
-	
-	public void eliminarAristasMayorPeso(int cantidadAEliminar) {
-		this.grafoArbolGeneradorMinimo.eliminarMayoresAristas(cantidadAEliminar);
+		
+		
 	}
 	
-	public void encontrarGrafosConexos() {
-		List<List<Integer>> lista = this.grafoArbolGeneradorMinimo.encontrarGrafosConexos();
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println("Grafo Conexo " + (i + 1) + ": " + lista.get(i));
-        }
+	public PriorityQueue<Arista> agm(Grafo grafo) {
+		boolean[] visitado = new boolean[grafo.getCantVertices()];
+		PriorityQueue<Arista> colaPrioridad = new PriorityQueue<>(Comparator.comparingInt(a -> a.getPeso()));
+		PriorityQueue<Arista> arbolGenerador = new PriorityQueue<>(Comparator.comparingInt(Arista::getPeso).reversed());
+		
+		visitado[0] = true;
+		for (Arista arista : grafo.getVecinos().get(0)) {
+			colaPrioridad.add(arista);
+		}
+		
+		while (!colaPrioridad.isEmpty()) {
+			Arista aristaActual = colaPrioridad.poll();
+			int nodoActual = aristaActual.getDestino();
+			
+			if (visitado[nodoActual]) continue;
+			
+			visitado[nodoActual] = true;
+			arbolGenerador.add(aristaActual);
+			for (Arista vecino : grafo.getVecinos().get(nodoActual)) {
+				if (!visitado[vecino.getDestino()]) {
+					colaPrioridad.add(vecino);
+				}
+			}
+		}
+		
+		 
+		return arbolGenerador;
 	}
 	
-	public void imprimirMatrizAdyacencia() {
-		grafo.imprimirMatrizAdyacencia();
+	private void print(List<List<Arista>> vecinos) {
+		
+		for(List<Arista> vertices : vecinos) {
+			for(Arista arista: vertices) {
+				
+				System.out.println("Arista: "+arista.getOrigen()+" >> " +arista.getDestino() + ", Peso: "+ arista.getPeso());
+			}
+		}
 	}
 }
