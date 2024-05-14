@@ -8,11 +8,18 @@ import java.util.Queue;
 
 import app.Programa;
 import app.componentes.Arista;
+import app.componentes.Grafo;
 
 class GrafoTest {
 	
+	@Test
+	void testCrearGrafo() {
+	    Grafo grafo = new Grafo(5);
+	    assertEquals(5, grafo.getCantVertices());
+	    assertEquals(5, grafo.getVecinos().size());
+	}
 	
-
+	
 	@Test
 	public void agm() {
 		
