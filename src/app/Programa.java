@@ -14,7 +14,7 @@ public class Programa {
 	public void run(int regiones, Grafo grafo) {
 		Queue<Arista> agm = agm(grafo);
 		
-		for(int x= 0; x <= regiones; x++) {
+		for(int x= 1; x <= regiones; x++) {
 			agm.poll();
 		}
 		
