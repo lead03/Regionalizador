@@ -2,7 +2,6 @@ package app.componentes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Grafo {
 	private int cantVertices;
@@ -40,6 +39,9 @@ public class Grafo {
 		}
 		if (origen == destino) {
 			throw new IllegalArgumentException("origen y destino son iguales");
+		}
+		if (origen >= this.cantVertices || destino >= this.cantVertices ) {
+			throw new IllegalArgumentException("El origen o destino es mayor que la cantidad de vértices");
 		}
 	}
 

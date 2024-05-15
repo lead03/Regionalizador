@@ -9,7 +9,7 @@ import java.util.Queue;
 import app.componentes.Arista;
 import app.componentes.Grafo;
 
-public class GrafoDummy {
+public class GrafoTestConfig {
 	
 	private static int A = 0;
 	private static int B = 1;
