@@ -31,7 +31,7 @@ public class ViewMapaArgentina extends AbstractPantalla {
         getContentPane().add(panelControles, BorderLayout.SOUTH);
 
         _mapa = new JMapViewer();
-        _mapa.setDisplayPosition(new Coordinate(-34.521, -58.7008), 15);
+        _mapa.setDisplayPosition(new Coordinate(-34.521, -58.7008), 5);
         getContentPane().add(_mapa, BorderLayout.CENTER);
     
     }
