@@ -35,7 +35,15 @@ public class ViewCargaMapa extends AbstractPantalla{
 		lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lTitulo.setFont(new Font("Arial", Font.PLAIN, 30));
 		this.getContentPane().add(lTitulo);
-	
+		
+		JLabel lDescripcion = new JLabel();
+		lDescripcion.setBounds(0, 30, getWidth(), 100);
+		lDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
+		lDescripcion.setText("Esta aplicación se encarga de generar regiones teniendo en cuenta los pesos que se declaren en las relaciones de las fronteras en las provincias.\r\n"
+				+ "En cada casillero se debe completar con un peso mayor a cero.\r\n"
+				+ "La cantidad de regiones debe ser menor a la cantidad de las provincias (23).");
+		this.getContentPane().add(lDescripcion);
+
 		this.limitrofes = new ArrayList<Limitrofe>();
 		limitrofes.add(new Limitrofe(Provincia.JUJUY, Provincia.SALTA));
 		limitrofes.add(new Limitrofe(Provincia.SALTA, Provincia.CATAMARCA));
@@ -132,7 +140,7 @@ public class ViewCargaMapa extends AbstractPantalla{
 	
 	private void validar() throws Exception {
 		if(Integer.parseInt(tbCantRegiones.getText()) >= Provincia.CANT_PROVINCIAS) {
-			throw new Exception("error: el peso debe ser menor a "+ Provincia.CANT_PROVINCIAS);
+			throw new Exception("error: la cantidad de regiones debe ser menor a "+ Provincia.CANT_PROVINCIAS);
 		}
 	}
 	private void procesar() throws Exception {
