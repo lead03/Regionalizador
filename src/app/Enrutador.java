@@ -27,7 +27,7 @@ public class Enrutador{
 		pantallas.add(menuInicio);
 	}
 
-	public static void finishWindows(JFrame cerrar, JFrame abrir, boolean dejarAbierto) {
+	public void finishWindows(JFrame cerrar, JFrame abrir, boolean dejarAbierto) {
 		if (dejarAbierto) {
 			pantallas.add(cerrar);
 		} else {

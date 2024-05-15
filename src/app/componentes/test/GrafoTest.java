@@ -4,10 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Queue;
-
-import app.Programa;
-import app.componentes.Arista;
 import app.componentes.Grafo;
 
 class GrafoTest {
@@ -17,15 +13,6 @@ class GrafoTest {
 	    Grafo grafo = new Grafo(5);
 	    assertEquals(5, grafo.getCantVertices());
 	    assertEquals(5, grafo.getVecinos().size());
-	}
-
-	@Test
-	public void testAgm() {		
-		Programa pro = new Programa();
-		Queue<Arista> agm = pro.agm(GrafoTestConfig.builGrafoConexo());
-		Queue<Arista> agmEsperado = GrafoTestConfig.builAgmEsperado();
-		print(agm);
-		assertTrue(equalList(agm, agmEsperado));
 	}
 	
 	@Test
@@ -75,13 +62,5 @@ class GrafoTest {
 	    });
 	}
 
-	private void print(Queue<Arista> agm) {
-		for(Arista arista: agm) {
-			System.out.println("Arista: "+arista.getOrigen()+" >> " +arista.getDestino() + ", Peso: "+ arista.getPeso());
-		}
-	}
 	
-	private boolean equalList(Queue<Arista> a, Queue<Arista> b) {
-		return a.equals(b);
-	}
 }

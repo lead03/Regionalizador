@@ -1,6 +1,5 @@
 package app;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -9,16 +8,19 @@ import java.util.Queue;
 import app.componentes.Arista;
 import app.componentes.Grafo;
 
-public class Programa {
+public class ServicioRegionalizador {
 	
-	public void run(int regiones, Grafo grafo) {
+	public Queue<Arista> calcularRegiones(int regiones, Grafo grafo) {
 		Queue<Arista> agm = agm(grafo);
 		
-		for(int x= 1; x <= regiones; x++) {
-			agm.poll();
+		if(regiones > 1) {
+			for(int x= 1; x <= regiones - 1; x++) {
+				agm.poll();
+			}
 		}
 		
 		
+		return agm;
 	}
 	
 	public PriorityQueue<Arista> agm(Grafo grafo) {
