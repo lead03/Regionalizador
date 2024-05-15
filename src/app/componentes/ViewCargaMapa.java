@@ -56,6 +56,26 @@ public class ViewCargaMapa extends AbstractPantalla{
 		limitrofes.add(new Limitrofe(Provincia.CORRIENTES, Provincia.ENTRE_RIOS));
 		limitrofes.add(new Limitrofe(Provincia.SANTA_FE, Provincia.CORDOBA));
 		limitrofes.add(new Limitrofe(Provincia.SANTA_FE, Provincia.ENTRE_RIOS));
+		limitrofes.add(new Limitrofe(Provincia.SANTA_FE, Provincia.BUENOS_AIRES));
+		limitrofes.add(new Limitrofe(Provincia.BUENOS_AIRES, Provincia.ENTRE_RIOS));
+		limitrofes.add(new Limitrofe(Provincia.BUENOS_AIRES, Provincia.LA_PAMPA));
+		limitrofes.add(new Limitrofe(Provincia.BUENOS_AIRES, Provincia.CORDOBA));
+		limitrofes.add(new Limitrofe(Provincia.BUENOS_AIRES, Provincia.RIO_NEGRO));
+		limitrofes.add(new Limitrofe(Provincia.CORDOBA, Provincia.LA_RIOJA));
+		limitrofes.add(new Limitrofe(Provincia.CORDOBA, Provincia.SAN_LUIS));
+		limitrofes.add(new Limitrofe(Provincia.CORDOBA, Provincia.LA_PAMPA));
+		limitrofes.add(new Limitrofe(Provincia.LA_RIOJA, Provincia.SAN_JUAN));
+		limitrofes.add(new Limitrofe(Provincia.LA_RIOJA, Provincia.SAN_LUIS));
+		limitrofes.add(new Limitrofe(Provincia.SAN_JUAN, Provincia.SAN_LUIS));
+		limitrofes.add(new Limitrofe(Provincia.SAN_JUAN, Provincia.MENDOZA));
+		limitrofes.add(new Limitrofe(Provincia.SAN_LUIS, Provincia.LA_PAMPA));
+		limitrofes.add(new Limitrofe(Provincia.SAN_LUIS, Provincia.MENDOZA));
+		limitrofes.add(new Limitrofe(Provincia.MENDOZA, Provincia.NEUQUEN));
+		limitrofes.add(new Limitrofe(Provincia.LA_PAMPA, Provincia.RIO_NEGRO));
+		limitrofes.add(new Limitrofe(Provincia.NEUQUEN, Provincia.RIO_NEGRO));
+		limitrofes.add(new Limitrofe(Provincia.RIO_NEGRO, Provincia.CHUBUT));
+		limitrofes.add(new Limitrofe(Provincia.CHUBUT, Provincia.SANTA_CRUZ));
+		limitrofes.add(new Limitrofe(Provincia.SANTA_CRUZ, Provincia.TIERRA_DEL_FUEGO));
 		
 		int x = 0;
 		int y = 0;
