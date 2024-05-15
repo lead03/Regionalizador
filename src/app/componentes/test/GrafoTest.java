@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Queue;
 
-import app.Programa;
+import app.ServicioRegionalizador;
 import app.componentes.Arista;
 import app.componentes.Grafo;
 
@@ -23,7 +23,7 @@ class GrafoTest {
 	@Test
 	public void agm() {
 		
-		Programa pro = new Programa();
+		ServicioRegionalizador pro = new ServicioRegionalizador();
 		Queue<Arista> agm = pro.agm(GrafoDummy.builGrafoConexo());
 		Queue<Arista> agmEsperado = GrafoDummy.builAgmEsperado();
 		

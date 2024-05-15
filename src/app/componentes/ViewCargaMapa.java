@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import app.Enrutador;
-import app.Programa;
+import app.ServicioRegionalizador;
 import app.componentes.test.GrafoDummy;
 
 public class ViewCargaMapa extends AbstractPantalla{
@@ -89,16 +89,12 @@ public class ViewCargaMapa extends AbstractPantalla{
 	private void procesar() {
 		Grafo grafo= new Grafo(23);
 		for(Limitrofe limitrofe :limitrofes) {
-			
 			JTextField textPeso = limitrofe.getTfPeso();
 			grafo.agregarArista(limitrofe.getOrigen().getValor(), limitrofe.getDestino().getValor(), Integer.valueOf(textPeso.getText()));
-
-			
 		}
 		
-		Programa programa = new Programa();
-		programa.run(3, grafo);
-		cambiarPantalla(GrafoDummy.builAgmEsperado());
+		ServicioRegionalizador service = new ServicioRegionalizador();
+		cambiarPantalla(service.calcularRegiones(3, grafo));
 	}
 
 	private void cambiarPantalla(Queue<Arista> amg) {
