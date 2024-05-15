@@ -4,13 +4,12 @@ public class Arista {
 
 	int origen, destino, peso;
 
-    public Arista(int origen, int destino, int peso) {
-    	this.origen = origen;
-        this.destino = destino;
-        this.peso = peso;
-    }
+	public Arista(int origen, int destino, int peso) {
+		this.origen = origen;
+		this.destino = destino;
+		this.peso = peso;
+	}
 
-    
 	public int getOrigen() {
 		return origen;
 	}
@@ -34,5 +33,4 @@ public class Arista {
 	public void setPeso(int peso) {
 		this.peso = peso;
 	}
-    
 }
