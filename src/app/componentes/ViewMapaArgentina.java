@@ -1,13 +1,14 @@
 package app.componentes;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.util.Queue;
+
+import javax.swing.JPanel;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
-
-import java.awt.*;
-import java.util.Queue;
 
 public class ViewMapaArgentina extends AbstractPantalla {
 

@@ -98,8 +98,8 @@ public class ViewCargaMapa extends AbstractPantalla{
 			}
 		}
 		
-		this.lmsError = new JLabel("defuals");
-		lmsError.setBounds(10, 150 + ((getHeight()/4) * 2), 250, 50);
+		this.lmsError = new JLabel("");
+		lmsError.setBounds(10, 150 + ((getHeight()/4) * 2), getWidth() - 10, 50);
 		lmsError.setFont(new Font("Arial", Font.PLAIN, 15));
 		lmsError.setForeground(Color.RED);
 		getContentPane().add(lmsError);
@@ -122,6 +122,7 @@ public class ViewCargaMapa extends AbstractPantalla{
 				validar();
 				procesar();
 			}catch (Exception ex) {
+				System.out.println(ex);
 				lmsError.setText(ex.getMessage());
 			}
         });

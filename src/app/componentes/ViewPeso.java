@@ -1,10 +1,10 @@
 package app.componentes;
 
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.*;
-import javax.swing.text.DocumentFilter.FilterBypass;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 public class ViewPeso extends JTextField{
 
