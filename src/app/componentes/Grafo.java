@@ -34,7 +34,7 @@ public class Grafo {
 	}
 
 	private void validarAristas(int origen, int destino, int peso) {
-		if (origen < 1 || destino < 1 || peso < 1) {
+		if (origen < 0 || destino < 0 || peso < 1) {
 			throw new IllegalArgumentException("Los índices o peso indicados no son válidos. " + "Origen: " + origen
 					+ ", destino: " + destino + ", peso: " + peso);
 		}
