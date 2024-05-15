@@ -1,5 +1,6 @@
 package app.componentes;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,12 @@ import javax.swing.SwingConstants;
 
 import app.Enrutador;
 import app.ServicioRegionalizador;
-import app.componentes.test.GrafoDummy;
+
 
 public class ViewCargaMapa extends AbstractPantalla{
 	private List<Limitrofe> limitrofes;
+	ViewPeso tbCantRegiones;
+	JLabel lmsError;
 	
 	public ViewCargaMapa() {
 		super();
@@ -95,27 +98,58 @@ public class ViewCargaMapa extends AbstractPantalla{
 			}
 		}
 		
+		this.lmsError = new JLabel("defuals");
+		lmsError.setBounds(10, 150 + ((getHeight()/4) * 2), 250, 50);
+		lmsError.setFont(new Font("Arial", Font.PLAIN, 15));
+		lmsError.setForeground(Color.RED);
+		getContentPane().add(lmsError);
+		
+		//cant regiones
+		JLabel lCantRegiones = new JLabel("cantidad de regiones");
+		lCantRegiones.setBounds(10, 100 + ((getHeight()/4) * 2), 250, 50);
+		lCantRegiones.setFont(new Font("Arial", Font.PLAIN, 15));
+		getContentPane().add(lCantRegiones);
+		
+		
+		tbCantRegiones = new ViewPeso();
+		tbCantRegiones.setBounds(250, 100 + ((getHeight()/4) * 2), 50, 50);
+		getContentPane().add(tbCantRegiones);
 		
 		JButton btnCalcularAgm = new JButton("camcular agm");
-		btnCalcularAgm.setBounds(10, 100 + ((getHeight()/4) * 2), this.getWidth()/2, 50);
+		btnCalcularAgm.setBounds(10, 100 + ((getHeight()/4) * 3), this.getWidth()/2, 50);
 		btnCalcularAgm.addActionListener(e -> {
-			procesar();
+			try {
+				validar();
+				procesar();
+			}catch (Exception ex) {
+				lmsError.setText(ex.getMessage());
+			}
         });
 		this.getContentPane().add(btnCalcularAgm);
 		
 	}
 	
-
-	private void procesar() {
+	private void validar() throws Exception {
+		if(Integer.parseInt(tbCantRegiones.getText()) >= Provincia.CANT_PROVINCIAS) {
+			throw new Exception("error: el peso debe ser menor a "+ Provincia.CANT_PROVINCIAS);
+		}
+	}
+	private void procesar() throws Exception {
 		Grafo grafo= new Grafo(23);
 		for(Limitrofe limitrofe :limitrofes) {
-			JTextField textPeso = limitrofe.getTfPeso();
-			grafo.agregarArista(limitrofe.getOrigen().getValor(), limitrofe.getDestino().getValor(), Integer.valueOf(textPeso.getText()));
+			int peso;
+			try{
+				peso = Integer.valueOf(limitrofe.getTfPeso().getText());
+			}catch (Exception e) {
+				throw new Exception("debe completar todos los campos");
+			}
+			grafo.agregarArista(limitrofe.getOrigen().getValor(), limitrofe.getDestino().getValor(), peso);
 		}
 		
 		ServicioRegionalizador service = new ServicioRegionalizador();
-		cambiarPantalla(service.calcularRegiones(3, grafo));
+		cambiarPantalla(service.calcularRegiones(Integer.parseInt(tbCantRegiones.getText()), grafo));
 	}
+
 
 	private void cambiarPantalla(Queue<Arista> amg) {
 		Enrutador enrutador= Enrutador.getInstancia();
@@ -134,9 +168,7 @@ public class ViewCargaMapa extends AbstractPantalla{
 			this.origen = origen;
 			
 			jlArista = new JLabel(origen + " <--> " + destino);
-			//Font("Arial", Font.PLAIN, 15)
 			tfPeso = new ViewPeso();
-			//Font("Arial", Font.PLAIN, 15)
 		}
 
 		public JLabel getLabelArista() {

@@ -13,8 +13,10 @@ public class ServicioRegionalizador {
 	public Queue<Arista> calcularRegiones(int regiones, Grafo grafo) {
 		Queue<Arista> agm = agm(grafo);
 		
-		for(int x= 1; x <= regiones; x++) {
-			agm.poll();
+		if(regiones > 1) {
+			for(int x= 1; x <= regiones - 1; x++) {
+				agm.poll();
+			}
 		}
 		
 		

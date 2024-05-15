@@ -1,6 +1,7 @@
 package app.componentes;
 
 public enum Provincia {
+	
 	BUENOS_AIRES(0),
     CATAMARCA(1),
     CHACO(2),
@@ -27,6 +28,7 @@ public enum Provincia {
     
     private int valor;
 
+    public static int CANT_PROVINCIAS = 23;
     // Constructor para asignar el valor int a cada constante
     Provincia(int valor) {
         this.valor = valor;

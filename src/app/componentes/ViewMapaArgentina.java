@@ -3,6 +3,9 @@ package app.componentes;
 import javax.swing.*;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+
 import java.awt.*;
 import java.util.Queue;
 
@@ -11,7 +14,7 @@ public class ViewMapaArgentina extends AbstractPantalla {
     private JPanel panelControles;
     private JMapViewer _mapa;
     private Queue<Arista> regiones;
-
+    private Mapa argentina = Mapa.getInstancia();
     public ViewMapaArgentina(Queue<Arista> reg) {
         super();
         regiones = reg;
@@ -33,13 +36,21 @@ public class ViewMapaArgentina extends AbstractPantalla {
     }
 
     private void dibujarRegiones() {
-    	Mapa argentina = Mapa.getInstancia();
+    	
     	for (Arista ar: regiones) {
     		_mapa.addMapPolygon(new ViewArista(argentina.get(ar.getOrigen()),argentina.get(ar.getDestino())));
     	}
     }
     
+    private void dibujarMarkerPRovincias() {
+    	for(Provincia provincia : Provincia.values()){
+    		_mapa.addMapMarker(new MapMarkerDot(argentina.get(provincia.getValor())));
+    		_mapa.addMapMarker(new MapMarkerDot(argentina.get(provincia.getValor())));
+    	}
+    	
+    }
     private void render( ) {
+    	dibujarMarkerPRovincias();
     	dibujarRegiones();
     }
     
